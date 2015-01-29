@@ -42,6 +42,12 @@ class Report implements JobReportInterface
         $scheduler->setStartDate($datetimeUtil->getUserNow());
         $scheduler->setInterval('1 hour');
         $scheduler->setEndAction($operation->getActivity());
+        /*
+         * To get the number of attendees after the Webinar ended, we make sure
+         * the scheduler runs 1 more time after the Webinar is done.
+         */
+        $scheduler->setProlongation('5 minutes');
+        $scheduler->setProlongationInterval('4 minutes');
         $this->em->persist($scheduler);
 
         $factService = $this->container->get('campaignchain.core.fact');
@@ -66,15 +72,39 @@ class Report implements JobReportInterface
 
         $client = $this->container->get('campaignchain.channel.citrix.rest.client');
         $connection = $client->connectByLocation($location);
-        $webinar = $connection->getWebinar($webinarLocation->getIdentifier());
-print_r($webinar);
-        // Add report data.
-        $facts[self::METRIC_REGISTRANTS] = $webinar['numberOfRegistrants'];
 
-        $factService = $this->container->get('campaignchain.core.fact');
-        $factService->addFacts('activity', self::OPERATION_BUNDLE_NAME, $operation, $facts);
+        $operationEndDate = $operation->getEndDate()->setTimezone(new \DateTimeZone('UTC'));
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
 
-        $this->message = 'Added to report: Registrants = '.$webinar['numberOfRegistrants'];
+        $this->container->get('logger')->info(
+            $operationEndDate->format(\DateTime::ISO8601)
+            ." <= "
+            .$now->format(\DateTime::ISO8601)
+        );
+
+        // If the Webinar is not done yet, collect data about registrants.
+        if($operationEndDate >= $now){
+            $webinar = $connection->getWebinar($webinarLocation->getIdentifier());
+
+            // Add report data.
+            $facts[self::METRIC_REGISTRANTS] = $webinar['numberOfRegistrants'];
+
+            $factService = $this->container->get('campaignchain.core.fact');
+            $factService->addFacts('activity', self::OPERATION_BUNDLE_NAME, $operation, $facts);
+
+            $this->message = 'Added to report: Registrants = '.$webinar['numberOfRegistrants'];
+        // Webinar is done, so collect data about attendees.
+        } else {
+            $sessions = $connection->getWebinarSessions($webinarLocation->getIdentifier());
+
+            // Add report data.
+            $facts[self::METRIC_ATTENDEES] = $sessions[0]['registrantsAttended'];
+
+            $factService = $this->container->get('campaignchain.core.fact');
+            $factService->addFacts('activity', self::OPERATION_BUNDLE_NAME, $operation, $facts);
+
+            $this->message = 'Added to report: Attendants = '.$sessions[0]['registrantsAttended'];
+        }
 
         return self::STATUS_OK;
     }
