@@ -1,0 +1,14 @@
+modules:
+    campaignchain-gotowebinar:
+        display_name: 'Include a Webinar'
+        channels: 
+        routes: 
+        hooks:
+        services:
+            report: campaignchain.job.report.gotowebinar
+        params: 
+            owns_location: true
+        metrics:
+            activity:
+                - "Registrants"
+                - "Attendees"

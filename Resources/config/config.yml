@@ -1,0 +1,11 @@
+assetic:
+    bundles:
+        - CampaignChainOperationGoToWebinarBundle
+    assets:
+        campaignchain_operation_gotowebinar_css:
+            inputs:
+                - '@CampaignChainOperationGoToWebinarBundle/Resources/public/css/base.css'
+twig:
+    form:
+        resources:
+            - 'CampaignChainOperationGoToWebinarBundle:Form:fields.html.twig'

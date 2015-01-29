@@ -1,0 +1,32 @@
+{
+    "name": "campaignchain/operation-gotowebinar",
+    "description": "Include a Webinar into a campaign.",
+    "type": "campaignchain-operation",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Sandro Groganz",
+            "email": "sandro@campaignchain.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": { "CampaignChain\\Operation\\GoToWebinarBundle\\": "" }
+    },
+    "extra": {
+        "campaignchain": {
+            "kernel": {
+                "classes": [
+                    "CampaignChain\\Operation\\GoToWebinarBundle\\CampaignChainOperationGoToWebinarBundle"
+                ],
+                "routing":
+                {
+                    "name": "campaignchain_operation_gotowebinar",
+                    "resource": "@CampaignChainOperationGoToWebinarBundle/Resources/config/routing.yml",
+                    "prefix": "/"
+                }
+            }
+        }
+    }
+}

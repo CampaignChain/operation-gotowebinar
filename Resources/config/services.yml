@@ -1,0 +1,4 @@
+services:
+    campaignchain.job.report.gotowebinar:
+        class: CampaignChain\Operation\GoToWebinarBundle\Job\Report
+        arguments: [ @doctrine.orm.entity_manager, @service_container ]
