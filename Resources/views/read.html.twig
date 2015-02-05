@@ -16,19 +16,21 @@ file that was distributed with this source code.
 
     {% include 'CampaignChainCoreBundle:Operation:field_header.html.twig' %}
 
-        {#{% if is_public == false %}#}
-            <div class="status">{{ status.getMessage()|campaignchain_make_links|raw }}</div>
-        {#{% else %}#}
-            {#<div class="fb-post"#}
-                 {#data-href="{{ status.getUrl() }}"#}
-                 {#data-width="500"></div>#}
-        {#{% endif %}#}
+    <h4>Title</h4>
+    <p>{{ webinar.getSubject() }}</p>
+    <h4>Description</h4>
+    <p>{{ webinar.getDescription() }}</p>
+    <hr/>
+    <h4>Date and Time</h4>
+    <p>{{ activity|campaignchain_tpl_trigger_hook_inline }} {{ activity.getStartDate()|date('T') }}</p>
+    <p><label>Webinar time zone:</label> {{ webinar.getTimeZone() }}</p>
 
     {% include 'CampaignChainCoreBundle:Operation:field_footer.html.twig' %}
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group" role="group" aria-label="...">
-            <a href="{{ status.getUrl() }}" target="_blank" class="btn btn-default"><i class="fa fa-external-link"></i> View on Facebook</a>
+            <a href="https://global.gotowebinar.com/g2wbroker/manageWebinar.tmpl?webinar={{ webinar.getWebinarKey() }}" target="_blank" class="btn btn-default"><i class="fa fa-edit"></i> Edit in GoToWebinar</a>
+            <a href="{{ webinar.getRegistrationUrl() }}" target="_blank" class="btn btn-default"><i class="fa fa-external-link"></i> Registration Page</a>
         </div>
     </div>
 {% endblock %}
