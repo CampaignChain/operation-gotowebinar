@@ -1,0 +1,32 @@
+{#
+This file is part of the CampaignChain package.
+
+(c) Sandro Groganz <sandro@campaignchain.com>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+
+{% stylesheets '@campaignchain_operation_gotowebinar_css' %}
+<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+{% endstylesheets %}
+
+{% include 'CampaignChainCoreBundle:Operation:field_header.html.twig' %}
+
+<h4>Title</h4>
+<p>{{ webinar.getSubject() }}</p>
+<h4>Description</h4>
+<p>{{ webinar.getDescription() }}</p>
+<hr/>
+<h4>Date and Time</h4>
+<p>{{ activity|campaignchain_tpl_trigger_hook_inline }} {{ activity.getStartDate()|date('T') }}</p>
+<p><label>Webinar time zone:</label> {{ webinar.getTimeZone() }}</p>
+
+{% include 'CampaignChainCoreBundle:Operation:field_footer.html.twig' %}
+
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group" role="group" aria-label="...">
+        <a href="https://global.gotowebinar.com/g2wbroker/manageWebinar.tmpl?webinar={{ webinar.getWebinarKey() }}" target="_blank" class="btn btn-default"><i class="fa fa-edit"></i> Edit in GoToWebinar</a>
+        <a href="{{ webinar.getRegistrationUrl() }}" target="_blank" class="btn btn-default"><i class="fa fa-external-link"></i> Registration Page</a>
+    </div>
+</div>
