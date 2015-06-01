@@ -11,8 +11,10 @@
 namespace CampaignChain\Operation\GoToWebinarBundle\EntityService;
 
 use Doctrine\ORM\EntityManager;
+use CampaignChain\CoreBundle\EntityService\OperationServiceInterface;
+use CampaignChain\CoreBundle\Entity\Operation;
 
-class Webinar
+class Webinar implements OperationServiceInterface
 {
     protected $em;
 
@@ -32,5 +34,14 @@ class Webinar
         }
 
         return $webinar;
+    }
+
+    public function cloneOperation(Operation $oldOperation, Operation $newOperation)
+    {
+        $webinar = $this->getWebinarByOperation($oldOperation);
+        $clonedWebinar = clone $webinar;
+        $clonedWebinar->setOperation($newOperation);
+        $this->em->persist($clonedWebinar);
+        $this->em->flush();
     }
 }

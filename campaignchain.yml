@@ -5,6 +5,7 @@ modules:
         routes: 
         hooks:
         services:
+            operation: campaignchain.operation.gotowebinar.webinar
             report: campaignchain.job.report.gotowebinar
         params: 
             owns_location: true
