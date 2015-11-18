@@ -12,6 +12,7 @@ namespace CampaignChain\Operation\GoToWebinarBundle\Entity;
 
 use CampaignChain\CoreBundle\Entity\Meta;
 use Doctrine\ORM\Mapping as ORM;
+use CampaignChain\CoreBundle\Util\ParserUtil;
 
 /**
  * @ORM\Entity
@@ -194,7 +195,7 @@ class Webinar extends Meta
      */
     public function setRegistrationUrl($registrationUrl)
     {
-        $this->registrationUrl = $registrationUrl;
+        $this->registrationUrl = ParserUtil::sanitizeUrl($registrationUrl);
 
         return $this;
     }
