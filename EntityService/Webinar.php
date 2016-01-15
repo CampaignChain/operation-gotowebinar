@@ -44,6 +44,7 @@ class Webinar implements OperationServiceInterface
         $this->em->persist($clonedWebinar);
         $this->em->flush();
     }
+    
     public function removeOperation($id){
         try {
             $operation = $this->getWebinarByOperation($id);
