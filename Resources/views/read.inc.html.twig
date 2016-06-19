@@ -19,7 +19,7 @@ file that was distributed with this source code.
 <p>{{ webinar.getDescription() }}</p>
 <hr/>
 <h4>Date and Time</h4>
-<p>{{ activity|campaignchain_tpl_trigger_hook_inline }} {{ activity.getStartDate()|date('T') }}</p>
+<p>{{ activity|campaignchain_tpl_trigger_hook }} {{ activity.getStartDate()|date('T') }}</p>
 <p><label>Webinar time zone:</label> {{ webinar.getTimeZone() }}</p>
 
 {% include 'CampaignChainCoreBundle:Operation:field_footer.html.twig' %}
