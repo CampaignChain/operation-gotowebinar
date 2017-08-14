@@ -6,6 +6,5 @@ assetic:
             inputs:
                 - '@CampaignChainOperationGoToWebinarBundle/Resources/public/css/base.css'
 twig:
-    form:
-        resources:
-            - 'CampaignChainOperationGoToWebinarBundle:Form:fields.html.twig'
+    form_themes:
+        - 'CampaignChainOperationGoToWebinarBundle:Form:fields.html.twig'
