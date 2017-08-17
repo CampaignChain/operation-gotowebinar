@@ -56,6 +56,7 @@ class Report implements JobReportInterface
         $scheduler->setProlongation('5 minutes');
         $scheduler->setProlongationInterval('4 minutes');
         $this->em->persist($scheduler);
+        $this->em->flush();
 
         $factService = $this->container->get('campaignchain.core.fact');
         $factService->addFacts('activity', self::OPERATION_BUNDLE_NAME, $operation, $facts);
