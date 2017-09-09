@@ -25,3 +25,10 @@ services:
     campaignchain.operation.gotowebinar.webinar:
         class: CampaignChain\Operation\GoToWebinarBundle\EntityService\Webinar
         arguments: [ '@doctrine' ]
+    campaignchain.operation.gotowebinar.form.type.include:
+        class: CampaignChain\Operation\GoToWebinarBundle\Form\Type\IncludeWebinarOperationType
+        arguments:
+            - '@doctrine'
+            - '@service_container'
+        tags:
+            - { name: form.type }
