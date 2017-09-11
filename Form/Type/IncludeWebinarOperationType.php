@@ -28,8 +28,10 @@ class IncludeWebinarOperationType extends OperationType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->setOptions($options);
+
         $builder->add('webinar', 'choice', array(
-            'choices'   => $this->content,
+            'choices'   => $options['data'],
             'required'  => false,
             'label' => 'Webinar',
             'attr' => array(
@@ -40,6 +42,8 @@ class IncludeWebinarOperationType extends OperationType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
+
         $defaults = array();
         $resolver->setDefaults($defaults);
     }
